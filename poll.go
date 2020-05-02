@@ -31,9 +31,9 @@ type PollAnswer struct {
 	OptionsId []int  `json:"options_id"`
 }
 
-func (c *BotClient) SendPoll(options SendPollOptions) (*Message, error) {
+func (c *BotClient) SendPoll(ctx context.Context, options SendPollOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(context.Background(), c.httpClient, c.buildEndpoint("sendPoll"), options, &message)
+	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendPoll"), options, &message)
 	if err != nil {
 		return nil, err
 	}

@@ -4,9 +4,9 @@ import (
 	"context"
 )
 
-func (c *BotClient) GetUpdates(options *GetUpdatesOptions) ([]Update, error) {
+func (c *BotClient) GetUpdates(ctx context.Context, options *GetUpdatesOptions) ([]Update, error) {
 	var updates []Update
-	_, err := doPost(context.Background(), c.httpClient, c.buildEndpoint("getUpdates"), options, &updates)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("getUpdates"), options, &updates)
 
 	return updates, err
 }

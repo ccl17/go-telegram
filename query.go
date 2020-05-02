@@ -14,9 +14,9 @@ type CallbackQuery struct {
 	GameShortName   string   `json:"game_short_name"`
 }
 
-func (c *BotClient) AnswerCallbackQuery(options AnswerCallbackQueryOptions) (bool, error) {
+func (c *BotClient) AnswerCallbackQuery(ctx context.Context, options AnswerCallbackQueryOptions) (bool, error) {
 	var success bool
-	apiResp, err := doPost(context.Background(), c.httpClient, c.buildEndpoint("answerCallbackQuery"), options, &success)
+	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("answerCallbackQuery"), options, &success)
 	if err != nil {
 		return false, nil
 	}

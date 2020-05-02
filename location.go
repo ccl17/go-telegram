@@ -17,9 +17,9 @@ type Venue struct {
 	FoursquareType string    `json:"foursquare_type,omitempty"`
 }
 
-func (c *BotClient) SendLocation(options SendLocationOptions) (*Message, error) {
+func (c *BotClient) SendLocation(ctx context.Context, options SendLocationOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(context.Background(), c.httpClient, c.buildEndpoint("sendLocation"), options, &message)
+	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendLocation"), options, &message)
 	if err != nil {
 		return nil, err
 	}
@@ -41,9 +41,9 @@ type SendLocationOptions struct {
 	ReplyMarkup         interface{} `json:"reply_markup,omitempty"`
 }
 
-func (c *BotClient) EditBotMessageLiveLocation(options EditMessageLiveLocationOptions) (*Message, error) {
+func (c *BotClient) EditBotMessageLiveLocation(ctx context.Context, options EditMessageLiveLocationOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(context.Background(), c.httpClient, c.buildEndpoint("editMessageLiveLocation"), options, &message)
+	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageLiveLocation"), options, &message)
 	if err != nil {
 		return nil, err
 	}
@@ -55,9 +55,9 @@ func (c *BotClient) EditBotMessageLiveLocation(options EditMessageLiveLocationOp
 	return &message, nil
 }
 
-func (c *BotClient) EditUserMessageLiveLocation(options EditMessageLiveLocationOptions) (bool, error) {
+func (c *BotClient) EditUserMessageLiveLocation(ctx context.Context, options EditMessageLiveLocationOptions) (bool, error) {
 	var success bool
-	apiResp, err := doPost(context.Background(), c.httpClient, c.buildEndpoint("editMessageLiveLocation"), options, &success)
+	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageLiveLocation"), options, &success)
 	if err != nil {
 		return false, err
 	}
@@ -78,9 +78,9 @@ type EditMessageLiveLocationOptions struct {
 	ReplyMarkup     *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 }
 
-func (c *BotClient) StopBotMessageLiveLocation(options StopMessageLiveLocationOptions) (*Message, error) {
+func (c *BotClient) StopBotMessageLiveLocation(ctx context.Context, options StopMessageLiveLocationOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(context.Background(), c.httpClient, c.buildEndpoint("stopMessageLiveLocation"), options, &message)
+	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("stopMessageLiveLocation"), options, &message)
 	if err != nil {
 		return nil, err
 	}
@@ -92,9 +92,9 @@ func (c *BotClient) StopBotMessageLiveLocation(options StopMessageLiveLocationOp
 	return &message, nil
 }
 
-func (c *BotClient) StopUserMessageLiveLocation(options StopMessageLiveLocationOptions) (bool, error) {
+func (c *BotClient) StopUserMessageLiveLocation(ctx context.Context, options StopMessageLiveLocationOptions) (bool, error) {
 	var success bool
-	apiResp, err := doPost(context.Background(), c.httpClient, c.buildEndpoint("stopMessageLiveLocation"), options, &success)
+	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("stopMessageLiveLocation"), options, &success)
 	if err != nil {
 		return false, err
 	}
@@ -113,9 +113,9 @@ type StopMessageLiveLocationOptions struct {
 	ReplyMarkup     *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 }
 
-func (c *BotClient) SendVenue(options SendVenueOptions) (*Message, error) {
+func (c *BotClient) SendVenue(ctx context.Context, options SendVenueOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(context.Background(), c.httpClient, c.buildEndpoint("sendVenue"), options, &message)
+	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendVenue"), options, &message)
 	if err != nil {
 		return nil, err
 	}

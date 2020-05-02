@@ -49,9 +49,9 @@ func (c *BotClient) InlineMode() (bool, error) {
 	return user.IsBot && user.SupportsInlineQueries, nil
 }
 
-func (c *BotClient) AnswerInlineQuery(opt AnswerCallbackQueryOptions) (bool, error) {
+func (c *BotClient) AnswerInlineQuery(ctx context.Context, options AnswerCallbackQueryOptions) (bool, error) {
 	var success bool
-	apiResp, err := doPost(context.Background(), c.httpClient, c.buildEndpoint("answerInlineQuery"), opt, &success)
+	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("answerInlineQuery"), options, &success)
 	if err != nil {
 		return false, err
 	}
