@@ -55,3 +55,40 @@ func (c *BotClient) GetMe() (*Bot, error) {
 
 	return &bot, nil
 }
+
+type BotCommand struct {
+	Command     string `json:"command"`
+	Description string `json:"description"`
+}
+
+func (c *BotClient) SetMyCommands(options SetMyCommandsOptions) (bool, error) {
+	var success bool
+	apiResp, err := doPost(context.Background(), c.httpClient, c.buildEndpoint("setMyCommands"), options, &success)
+	if err != nil {
+		return false, err
+	}
+
+	if !apiResp.Ok {
+		return false, newApiRespErr(apiResp)
+	}
+
+	return success, nil
+}
+
+type SetMyCommandsOptions struct {
+	Commands []*BotCommand `json:"commands"`
+}
+
+func (c *BotClient) GetMyCommands() ([]*BotCommand, error) {
+	var commands []*BotCommand
+	apiResp, err := doGet(context.Background(), c.httpClient, c.buildEndpoint("getMyCommands"), &commands)
+	if err != nil {
+		return commands, err
+	}
+
+	if !apiResp.Ok {
+		return commands, newApiRespErr(apiResp)
+	}
+
+	return commands, nil
+}
