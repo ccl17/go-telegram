@@ -44,13 +44,9 @@ func New(botToken string, options ...Option) *BotClient {
 
 func (c *BotClient) GetMe(ctx context.Context) (*Bot, error) {
 	var bot Bot
-	apiResp, err := doGet(ctx, c.httpClient, c.buildEndpoint("getMe"), &bot)
+	_, err := doGet(ctx, c.httpClient, c.buildEndpoint("getMe"), &bot)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &bot, nil
@@ -63,13 +59,9 @@ type BotCommand struct {
 
 func (c *BotClient) SetMyCommands(ctx context.Context, options SetMyCommandsOptions) (bool, error) {
 	var success bool
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("setMyCommands"), options, &success)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("setMyCommands"), options, &success)
 	if err != nil {
 		return false, err
-	}
-
-	if !apiResp.Ok {
-		return false, newApiRespErr(apiResp)
 	}
 
 	return success, nil
@@ -81,13 +73,9 @@ type SetMyCommandsOptions struct {
 
 func (c *BotClient) GetMyCommands(ctx context.Context) ([]*BotCommand, error) {
 	var commands []*BotCommand
-	apiResp, err := doGet(ctx, c.httpClient, c.buildEndpoint("getMyCommands"), &commands)
+	_, err := doGet(ctx, c.httpClient, c.buildEndpoint("getMyCommands"), &commands)
 	if err != nil {
 		return commands, err
-	}
-
-	if !apiResp.Ok {
-		return commands, newApiRespErr(apiResp)
 	}
 
 	return commands, nil

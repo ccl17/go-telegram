@@ -59,12 +59,24 @@ func requestWithPayload(endpoint string, payload interface{}) (*http.Request, er
 
 func parseApiResponse(resp *http.Response, out interface{}) (*ApiResponse, error) {
 	var apiResponse ApiResponse
-	err := json.NewDecoder(resp.Body).Decode(&apiResponse)
-	if err != nil {
+
+	if err := json.NewDecoder(resp.Body).Decode(&apiResponse); err != nil {
 		return nil, err
 	}
 
 	if err := json.Unmarshal(apiResponse.Result, out); err != nil {
+		return nil, err
+	}
+
+	if !apiResponse.Ok {
+		err := &ApiResponseErr{
+			StatusCode:  apiResponse.ErrorCode,
+			Description: apiResponse.Description,
+		}
+
+		if apiResponse.Parameters != nil {
+			err.Parameters = apiResponse.Parameters
+		}
 		return nil, err
 	}
 
@@ -79,16 +91,19 @@ type ApiResponse struct {
 	Parameters  *ResponseParameters `json:"parameters"`
 }
 
-func newApiRespErr(apiResponse *ApiResponse) error {
-	return &ApiResponseErr{apiResponse}
-}
-
 type ApiResponseErr struct {
-	apiResp *ApiResponse
+	StatusCode  int
+	Description string
+	Parameters  *ResponseParameters
 }
 
 func (e *ApiResponseErr) Error() string {
-	return fmt.Sprintf("Error code: %v Description: %v", e.apiResp.ErrorCode, e.apiResp.Description)
+	errString := fmt.Sprintf("Status code: %v Description: %v", e.StatusCode, e.Description)
+	if e.Parameters != nil {
+		errString = errString + fmt.Sprintf(" Migrate To Chat ID: %v Retry After: %v", e.Parameters.MigrateToChatId, e.Parameters.RetryAfter)
+	}
+
+	return errString
 }
 
 type ResponseParameters struct {

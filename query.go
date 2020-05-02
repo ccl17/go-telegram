@@ -16,13 +16,9 @@ type CallbackQuery struct {
 
 func (c *BotClient) AnswerCallbackQuery(ctx context.Context, options AnswerCallbackQueryOptions) (bool, error) {
 	var success bool
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("answerCallbackQuery"), options, &success)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("answerCallbackQuery"), options, &success)
 	if err != nil {
 		return false, nil
-	}
-
-	if !apiResp.Ok {
-		return false, newApiRespErr(apiResp)
 	}
 
 	return success, nil

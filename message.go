@@ -65,13 +65,9 @@ type MessageEntity struct {
 
 func (c *BotClient) SendMessage(ctx context.Context, options SendMessageOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendMessage"), options, &message)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendMessage"), options, &message)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &message, nil
@@ -89,13 +85,9 @@ type SendMessageOptions struct {
 
 func (c *BotClient) ForwardMessage(ctx context.Context, options ForwardMessageOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("forwardMessage"), options, &message)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("forwardMessage"), options, &message)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &message, nil
@@ -110,13 +102,9 @@ type ForwardMessageOptions struct {
 
 func (c *BotClient) EditMessageText(ctx context.Context, options EditMessageTextOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageText"), options, &message)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageText"), options, &message)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &message, nil
@@ -134,13 +122,9 @@ type EditMessageTextOptions struct {
 
 func (c *BotClient) EditMessageCaption(ctx context.Context, options EditMessageCaptionOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageCaption"), options, &message)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageCaption"), options, &message)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &message, nil
@@ -159,13 +143,9 @@ type EditMessageCaptionOptions struct {
 
 func (c *BotClient) EditMessageReplyMarkup(ctx context.Context, options EditMessageReplyMarkupOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageReplyMarkup"), options, &message)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageReplyMarkup"), options, &message)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &message, nil
@@ -180,13 +160,9 @@ type EditMessageReplyMarkupOptions struct {
 
 func (c *BotClient) StopPoll(ctx context.Context, options StopPollOptions) (*Poll, error) {
 	var poll Poll
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("stopPoll"), options, &poll)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("stopPoll"), options, &poll)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &poll, nil
@@ -200,13 +176,9 @@ type StopPollOptions struct {
 
 func (c *BotClient) DeleteMessage(ctx context.Context, options DeleteMessageOptions) (bool, error) {
 	var success bool
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("deleteMessage"), options, &success)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("deleteMessage"), options, &success)
 	if err != nil {
 		return false, err
-	}
-
-	if !apiResp.Ok {
-		return false, newApiRespErr(apiResp)
 	}
 
 	return success, nil
@@ -224,13 +196,9 @@ type Dice struct {
 
 func (c *BotClient) SendDice(ctx context.Context, options SendDiceOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendDice"), options, &message)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendDice"), options, &message)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &message, nil

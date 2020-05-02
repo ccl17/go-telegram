@@ -19,13 +19,9 @@ type Venue struct {
 
 func (c *BotClient) SendLocation(ctx context.Context, options SendLocationOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendLocation"), options, &message)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendLocation"), options, &message)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &message, nil
@@ -43,13 +39,9 @@ type SendLocationOptions struct {
 
 func (c *BotClient) EditBotMessageLiveLocation(ctx context.Context, options EditMessageLiveLocationOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageLiveLocation"), options, &message)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageLiveLocation"), options, &message)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &message, nil
@@ -57,13 +49,9 @@ func (c *BotClient) EditBotMessageLiveLocation(ctx context.Context, options Edit
 
 func (c *BotClient) EditUserMessageLiveLocation(ctx context.Context, options EditMessageLiveLocationOptions) (bool, error) {
 	var success bool
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageLiveLocation"), options, &success)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageLiveLocation"), options, &success)
 	if err != nil {
 		return false, err
-	}
-
-	if !apiResp.Ok {
-		return false, newApiRespErr(apiResp)
 	}
 
 	return success, nil
@@ -80,13 +68,9 @@ type EditMessageLiveLocationOptions struct {
 
 func (c *BotClient) StopBotMessageLiveLocation(ctx context.Context, options StopMessageLiveLocationOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("stopMessageLiveLocation"), options, &message)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("stopMessageLiveLocation"), options, &message)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &message, nil
@@ -94,13 +78,9 @@ func (c *BotClient) StopBotMessageLiveLocation(ctx context.Context, options Stop
 
 func (c *BotClient) StopUserMessageLiveLocation(ctx context.Context, options StopMessageLiveLocationOptions) (bool, error) {
 	var success bool
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("stopMessageLiveLocation"), options, &success)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("stopMessageLiveLocation"), options, &success)
 	if err != nil {
 		return false, err
-	}
-
-	if !apiResp.Ok {
-		return false, newApiRespErr(apiResp)
 	}
 
 	return success, nil
@@ -115,13 +95,9 @@ type StopMessageLiveLocationOptions struct {
 
 func (c *BotClient) SendVenue(ctx context.Context, options SendVenueOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendVenue"), options, &message)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendVenue"), options, &message)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &message, nil

@@ -40,8 +40,8 @@ type InputTextMessageContent struct {
 	DisableWebPagePreview bool   `json:"disable_web_page_preview,omitempty"`
 }
 
-func (c *BotClient) InlineMode() (bool, error) {
-	user, err := c.GetMe()
+func (c *BotClient) InlineMode(ctx context.Context) (bool, error) {
+	user, err := c.GetMe(ctx)
 	if err != nil {
 		return false, err
 	}
@@ -51,13 +51,9 @@ func (c *BotClient) InlineMode() (bool, error) {
 
 func (c *BotClient) AnswerInlineQuery(ctx context.Context, options AnswerCallbackQueryOptions) (bool, error) {
 	var success bool
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("answerInlineQuery"), options, &success)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("answerInlineQuery"), options, &success)
 	if err != nil {
 		return false, err
-	}
-
-	if !apiResp.Ok {
-		return false, newApiRespErr(apiResp)
 	}
 
 	return success, nil

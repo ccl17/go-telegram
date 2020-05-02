@@ -33,13 +33,9 @@ type PollAnswer struct {
 
 func (c *BotClient) SendPoll(ctx context.Context, options SendPollOptions) (*Message, error) {
 	var message Message
-	apiResp, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendPoll"), options, &message)
+	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendPoll"), options, &message)
 	if err != nil {
 		return nil, err
-	}
-
-	if !apiResp.Ok {
-		return nil, newApiRespErr(apiResp)
 	}
 
 	return &message, nil
