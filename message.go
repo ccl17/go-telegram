@@ -158,22 +158,6 @@ type EditMessageReplyMarkupOptions struct {
 	ReplyMarkup     *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 }
 
-func (c *BotClient) StopPoll(ctx context.Context, options StopPollOptions) (*Poll, error) {
-	var poll Poll
-	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("stopPoll"), options, &poll)
-	if err != nil {
-		return nil, err
-	}
-
-	return &poll, nil
-}
-
-type StopPollOptions struct {
-	ChatId      int                   `json:"chat_id,omitempty"`
-	MessageId   int                   `json:"message_id,omitempty"`
-	ReplyMarkup *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
-}
-
 func (c *BotClient) DeleteMessage(ctx context.Context, options DeleteMessageOptions) (bool, error) {
 	var success bool
 	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("deleteMessage"), options, &success)
