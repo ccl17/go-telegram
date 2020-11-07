@@ -15,7 +15,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/chenlu-chua/go-telegram"
+	"github.com/ccl17/go-telegram"
 )
 
 func main() {
