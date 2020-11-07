@@ -5,19 +5,19 @@ import (
 	"net/http"
 )
 
-const (
-	WEBAPIURLFORMAT = "https://api.telegram.org/bot%s/%s"
-)
-
 type BotClient struct {
-	botToken   string
-	httpClient *http.Client
+	token      string
+	httpClient httpClient
 	httpMux    *http.ServeMux
+}
+
+type httpClient interface {
+	Do(*http.Request) (*http.Response, error)
 }
 
 type Option func(*BotClient)
 
-func OptionHttpClient(httpClient *http.Client) func(*BotClient) {
+func OptionHttpClient(httpClient httpClient) func(*BotClient) {
 	return func(c *BotClient) {
 		c.httpClient = httpClient
 	}
@@ -31,7 +31,7 @@ func OptionHttpMux(httpMux *http.ServeMux) func(*BotClient) {
 
 func New(botToken string, options ...Option) *BotClient {
 	t := &BotClient{
-		botToken:   botToken,
+		token:      botToken,
 		httpClient: &http.Client{},
 	}
 
@@ -44,12 +44,20 @@ func New(botToken string, options ...Option) *BotClient {
 
 func (c *BotClient) GetMe(ctx context.Context) (*Bot, error) {
 	var bot Bot
-	_, err := doGet(ctx, c.httpClient, c.buildEndpoint("getMe"), &bot)
-	if err != nil {
-		return nil, err
-	}
+	err := c.getMethod(ctx, apiGetMe, &bot)
+	return &bot, err
+}
 
-	return &bot, nil
+func (c *BotClient) LogOut(ctx context.Context) (*Bot, error) {
+	var bot Bot
+	err := c.getMethod(ctx, apiLogOut, &bot)
+	return &bot, err
+}
+
+func (c *BotClient) Close(ctx context.Context) (bool, error) {
+	var success bool
+	err := c.getMethod(ctx, apiClose, &success)
+	return success, err
 }
 
 type BotCommand struct {
@@ -59,24 +67,16 @@ type BotCommand struct {
 
 func (c *BotClient) SetMyCommands(ctx context.Context, options SetMyCommandsOptions) (bool, error) {
 	var success bool
-	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("setMyCommands"), options, &success)
-	if err != nil {
-		return false, err
-	}
-
-	return success, nil
+	err := c.postMethod(ctx, apiSetMyCommands, options, &success)
+	return success, err
 }
 
 type SetMyCommandsOptions struct {
-	Commands []*BotCommand `json:"commands"`
+	Commands []BotCommand `json:"commands"`
 }
 
-func (c *BotClient) GetMyCommands(ctx context.Context) ([]*BotCommand, error) {
-	var commands []*BotCommand
-	_, err := doGet(ctx, c.httpClient, c.buildEndpoint("getMyCommands"), &commands)
-	if err != nil {
-		return commands, err
-	}
-
-	return commands, nil
+func (c *BotClient) GetMyCommands(ctx context.Context) ([]BotCommand, error) {
+	var commands []BotCommand
+	err := c.getMethod(ctx, apiGetMyCommands, &commands)
+	return commands, err
 }

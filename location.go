@@ -19,71 +19,46 @@ type Venue struct {
 
 func (c *BotClient) SendLocation(ctx context.Context, options SendLocationOptions) (*Message, error) {
 	var message Message
-	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendLocation"), options, &message)
-	if err != nil {
-		return nil, err
-	}
-
-	return &message, nil
+	err := c.postMethod(ctx, apiSendLocation, options, &message)
+	return &message, err
 }
 
 type SendLocationOptions struct {
-	ChatId              int         `json:"chat_id"`
-	Latitude            float64     `json:"latitude"`
-	Longitude           float64     `json:"longitude"`
-	LivePeriod          int         `json:"live_period,omitempty"`
-	DisableNotification bool        `json:"disable_notification,omitempty"`
-	ReplyToMessageId    int         `json:"reply_to_message_id,omitempty"`
-	ReplyMarkup         interface{} `json:"reply_markup,omitempty"`
+	ChatId                   int         `json:"chat_id"`
+	Latitude                 float64     `json:"latitude"`
+	Longitude                float64     `json:"longitude"`
+	HorizontalAccuracy       float64     `json:"horizontal_accuracy,omitempty"`
+	LivePeriod               int         `json:"live_period,omitempty"`
+	Heading                  int         `json:"heading,omitempty"`
+	ProximityAlertRadius     int         `json:"proximity_alert_radius,omitempty"`
+	DisableNotification      bool        `json:"disable_notification,omitempty"`
+	ReplyToMessageId         int         `json:"reply_to_message_id,omitempty"`
+	AllowSendingWithoutReply bool        `json:"allow_sending_without_reply,omitempty"`
+	ReplyMarkup              interface{} `json:"reply_markup,omitempty"`
 }
 
-func (c *BotClient) EditBotMessageLiveLocation(ctx context.Context, options EditMessageLiveLocationOptions) (*Message, error) {
+func (c *BotClient) EditMessageLiveLocation(ctx context.Context, options EditMessageLiveLocationOptions) (*Message, error) {
 	var message Message
-	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageLiveLocation"), options, &message)
-	if err != nil {
-		return nil, err
-	}
-
-	return &message, nil
-}
-
-func (c *BotClient) EditUserMessageLiveLocation(ctx context.Context, options EditMessageLiveLocationOptions) (bool, error) {
-	var success bool
-	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("editMessageLiveLocation"), options, &success)
-	if err != nil {
-		return false, err
-	}
-
-	return success, nil
+	err := c.postMethod(ctx, apiEditMessageLiveLocation, options, &message)
+	return &message, err
 }
 
 type EditMessageLiveLocationOptions struct {
-	ChatId          int                   `json:"chat_id,omitempty"`
-	MessageId       int                   `json:"message_id,omitempty"`
-	InlineMessageId string                `json:"inline_message_id,omitempty"`
-	Latitude        float64               `json:"latitude"`
-	Longitude       float64               `json:"longitude"`
-	ReplyMarkup     *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
+	ChatId               int                   `json:"chat_id,omitempty"`
+	MessageId            int                   `json:"message_id,omitempty"`
+	InlineMessageId      string                `json:"inline_message_id,omitempty"`
+	Latitude             float64               `json:"latitude"`
+	Longitude            float64               `json:"longitude"`
+	HorizontalAccuracy   float64               `json:"horizontal_accuracy,omitempty"`
+	Heading              int                   `json:"heading,omitempty"`
+	ProximityAlertRadius int                   `json:"proximity_alert_radius,omitempty"`
+	ReplyMarkup          *InlineKeyboardMarkup `json:"reply_markup,omitempty"`
 }
 
-func (c *BotClient) StopBotMessageLiveLocation(ctx context.Context, options StopMessageLiveLocationOptions) (*Message, error) {
+func (c *BotClient) StopMessageLiveLocation(ctx context.Context, options StopMessageLiveLocationOptions) (*Message, error) {
 	var message Message
-	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("stopMessageLiveLocation"), options, &message)
-	if err != nil {
-		return nil, err
-	}
-
-	return &message, nil
-}
-
-func (c *BotClient) StopUserMessageLiveLocation(ctx context.Context, options StopMessageLiveLocationOptions) (bool, error) {
-	var success bool
-	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("stopMessageLiveLocation"), options, &success)
-	if err != nil {
-		return false, err
-	}
-
-	return success, nil
+	err := c.postMethod(ctx, apiStopMessageLiveLocation, options, &message)
+	return &message, err
 }
 
 type StopMessageLiveLocationOptions struct {
@@ -95,23 +70,22 @@ type StopMessageLiveLocationOptions struct {
 
 func (c *BotClient) SendVenue(ctx context.Context, options SendVenueOptions) (*Message, error) {
 	var message Message
-	_, err := doPost(ctx, c.httpClient, c.buildEndpoint("sendVenue"), options, &message)
-	if err != nil {
-		return nil, err
-	}
-
-	return &message, nil
+	err := c.postMethod(ctx, apiSendVenue, options, &message)
+	return &message, err
 }
 
 type SendVenueOptions struct {
-	ChatId              int         `json:"chat_id"`
-	Latitude            float64     `json:"latitude"`
-	Longitude           float64     `json:"longitude"`
-	Title               string      `json:"title"`
-	Address             string      `json:"address"`
-	FoursquareId        string      `json:"foursquare_id,omitempty"`
-	FoursquareType      string      `json:"foursquare_type,omitempty"`
-	DisableNotification bool        `json:"disable_notification,omitempty"`
-	ReplyToMessageId    int         `json:"reply_to_message_id,omitempty"`
-	ReplyMarkup         interface{} `json:"reply_markup,omitempty"`
+	ChatId                   int         `json:"chat_id"`
+	Latitude                 float64     `json:"latitude"`
+	Longitude                float64     `json:"longitude"`
+	Title                    string      `json:"title"`
+	Address                  string      `json:"address"`
+	FoursquareId             string      `json:"foursquare_id,omitempty"`
+	FoursquareType           string      `json:"foursquare_type,omitempty"`
+	GooglePlaceId            string      `json:"google_place_id,omitempty"`
+	GooglePlaceType          string      `json:"google_place_type,omitempty"`
+	DisableNotification      bool        `json:"disable_notification,omitempty"`
+	ReplyToMessageId         int         `json:"reply_to_message_id,omitempty"`
+	AllowSendingWithoutReply bool        `json:"allow_sending_without_reply,omitempty"`
+	ReplyMarkup              interface{} `json:"reply_markup,omitempty"`
 }
