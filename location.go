@@ -19,7 +19,7 @@ type Venue struct {
 
 func (c *BotClient) SendLocation(ctx context.Context, options SendLocationOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiSendLocation, options, &message)
+	err := c.postJson(ctx, apiSendLocation, options, &message)
 	return &message, err
 }
 
@@ -39,7 +39,7 @@ type SendLocationOptions struct {
 
 func (c *BotClient) EditMessageLiveLocation(ctx context.Context, options EditMessageLiveLocationOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiEditMessageLiveLocation, options, &message)
+	err := c.postJson(ctx, apiEditMessageLiveLocation, options, &message)
 	return &message, err
 }
 
@@ -57,7 +57,7 @@ type EditMessageLiveLocationOptions struct {
 
 func (c *BotClient) StopMessageLiveLocation(ctx context.Context, options StopMessageLiveLocationOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiStopMessageLiveLocation, options, &message)
+	err := c.postJson(ctx, apiStopMessageLiveLocation, options, &message)
 	return &message, err
 }
 
@@ -70,7 +70,7 @@ type StopMessageLiveLocationOptions struct {
 
 func (c *BotClient) SendVenue(ctx context.Context, options SendVenueOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiSendVenue, options, &message)
+	err := c.postJson(ctx, apiSendVenue, options, &message)
 	return &message, err
 }
 

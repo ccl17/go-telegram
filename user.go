@@ -34,7 +34,7 @@ type PhotoSize struct {
 
 func (c *BotClient) GetUserProfilePhotos(ctx context.Context, options GetUserProfilePhotosOptions) (*UserProfilePhotos, error) {
 	var userProfilePhotos UserProfilePhotos
-	err := c.postMethod(ctx, apiGetUserProfilePhotos, options, &userProfilePhotos)
+	err := c.postJson(ctx, apiGetUserProfilePhotos, options, &userProfilePhotos)
 	return &userProfilePhotos, err
 }
 
@@ -53,7 +53,7 @@ type File struct {
 
 func (c *BotClient) GetFile(ctx context.Context, options GetFileOptions) (*File, error) {
 	var file File
-	err := c.postMethod(ctx, apiGetFile, options, &file)
+	err := c.postJson(ctx, apiGetFile, options, &file)
 	return &file, err
 }
 

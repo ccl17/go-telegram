@@ -67,7 +67,7 @@ type BotCommand struct {
 
 func (c *BotClient) SetMyCommands(ctx context.Context, options SetMyCommandsOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiSetMyCommands, options, &success)
+	err := c.postJson(ctx, apiSetMyCommands, options, &success)
 	return success, err
 }
 

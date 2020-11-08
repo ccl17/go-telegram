@@ -57,7 +57,7 @@ type ChatOptions struct {
 
 func (c *BotClient) SendChatAction(ctx context.Context, options SendChatActionOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiSendChatAction, options, &success)
+	err := c.postJson(ctx, apiSendChatAction, options, &success)
 	return success, err
 }
 
@@ -68,7 +68,7 @@ type SendChatActionOptions struct {
 
 func (c *BotClient) KickChatMember(ctx context.Context, options KickChatMemberOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiKickChatMember, options, &success)
+	err := c.postJson(ctx, apiKickChatMember, options, &success)
 	return success, err
 }
 
@@ -80,7 +80,7 @@ type KickChatMemberOptions struct {
 
 func (c *BotClient) UnbanChatMember(ctx context.Context, options UnbanChatMemberOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiUnbanChatMember, options, &success)
+	err := c.postJson(ctx, apiUnbanChatMember, options, &success)
 	return success, err
 }
 
@@ -92,7 +92,7 @@ type UnbanChatMemberOptions struct {
 
 func (c *BotClient) RestrictChatMember(ctx context.Context, options RestrictChatMemberOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiRestrictChatMember, options, &success)
+	err := c.postJson(ctx, apiRestrictChatMember, options, &success)
 	return success, err
 }
 
@@ -105,7 +105,7 @@ type RestrictChatMemberOptions struct {
 
 func (c *BotClient) PromoteChatMember(ctx context.Context, options PromoteChatMemberOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiPromoteChatMember, options, &success)
+	err := c.postJson(ctx, apiPromoteChatMember, options, &success)
 	return success, err
 }
 
@@ -125,7 +125,7 @@ type PromoteChatMemberOptions struct {
 
 func (c *BotClient) SetChatAdministratorCustomTitle(ctx context.Context, options SetChatAdministratorCustomTitleOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiSetChatAdministratorCustomTitle, options, &success)
+	err := c.postJson(ctx, apiSetChatAdministratorCustomTitle, options, &success)
 	return success, err
 }
 
@@ -137,7 +137,7 @@ type SetChatAdministratorCustomTitleOptions struct {
 
 func (c *BotClient) SetChatPermissions(ctx context.Context, options SetChatPermissionsOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiSetChatPermissions, options, &success)
+	err := c.postJson(ctx, apiSetChatPermissions, options, &success)
 	return success, err
 }
 
@@ -148,19 +148,19 @@ type SetChatPermissionsOptions struct {
 
 func (c *BotClient) ExportChatInviteLink(ctx context.Context, options ChatOptions) (string, error) {
 	var inviteLink string
-	err := c.postMethod(ctx, apiExportChatInviteLink, options, &inviteLink)
+	err := c.postJson(ctx, apiExportChatInviteLink, options, &inviteLink)
 	return inviteLink, err
 }
 
 func (c *BotClient) DeleteChatPhoto(ctx context.Context, options ChatOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiDeleteChatPhoto, options, &success)
+	err := c.postJson(ctx, apiDeleteChatPhoto, options, &success)
 	return success, err
 }
 
 func (c *BotClient) SetChatTitle(ctx context.Context, options SetChatTitleOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiSetChatTitle, options, &success)
+	err := c.postJson(ctx, apiSetChatTitle, options, &success)
 	return success, err
 }
 
@@ -171,7 +171,7 @@ type SetChatTitleOptions struct {
 
 func (c *BotClient) SetChatDescription(ctx context.Context, options SetChatDescriptionOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiSetChatDescription, options, &success)
+	err := c.postJson(ctx, apiSetChatDescription, options, &success)
 	return success, err
 }
 
@@ -182,7 +182,7 @@ type SetChatDescriptionOptions struct {
 
 func (c *BotClient) PinChatMessage(ctx context.Context, options PinChatMessageOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiPinChatMessage, options, &success)
+	err := c.postJson(ctx, apiPinChatMessage, options, &success)
 	return success, err
 }
 
@@ -194,7 +194,7 @@ type PinChatMessageOptions struct {
 
 func (c *BotClient) UnpinChatMessage(ctx context.Context, options UnpinChatMessageOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiUnpinChatMessage, options, &success)
+	err := c.postJson(ctx, apiUnpinChatMessage, options, &success)
 	return success, err
 }
 
@@ -205,37 +205,37 @@ type UnpinChatMessageOptions struct {
 
 func (c *BotClient) UnpinAllChatMessages(ctx context.Context, options ChatOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiUnpinAllChatMessages, options, &success)
+	err := c.postJson(ctx, apiUnpinAllChatMessages, options, &success)
 	return success, err
 }
 
 func (c *BotClient) LeaveChat(ctx context.Context, options ChatOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiLeaveChat, options, &success)
+	err := c.postJson(ctx, apiLeaveChat, options, &success)
 	return success, err
 }
 
 func (c *BotClient) GetChat(ctx context.Context, options ChatOptions) (*Chat, error) {
 	var chat Chat
-	err := c.postMethod(ctx, apiGetChat, options, &chat)
-	return &chat, nil
+	err := c.postJson(ctx, apiGetChat, options, &chat)
+	return &chat, err
 }
 
 func (c *BotClient) GetChatAdministrators(ctx context.Context, options ChatOptions) ([]ChatMember, error) {
 	var chatMembers []ChatMember
-	err := c.postMethod(ctx, apiGetChatAdministrators, options, &chatMembers)
+	err := c.postJson(ctx, apiGetChatAdministrators, options, &chatMembers)
 	return chatMembers, err
 }
 
 func (c *BotClient) GetChatMembersCount(ctx context.Context, options ChatOptions) (int, error) {
 	var membersCount int
-	err := c.postMethod(ctx, apiGetChatMembersCount, options, &membersCount)
+	err := c.postJson(ctx, apiGetChatMembersCount, options, &membersCount)
 	return membersCount, err
 }
 
 func (c *BotClient) GetChatMember(ctx context.Context, options GetChatMemberOptions) (*ChatMember, error) {
 	var member ChatMember
-	err := c.postMethod(ctx, apiGetChatMember, options, &member)
+	err := c.postJson(ctx, apiGetChatMember, options, &member)
 	return &member, err
 }
 
@@ -246,7 +246,7 @@ type GetChatMemberOptions struct {
 
 func (c *BotClient) SetChatStickerSet(ctx context.Context, options SetChatStickerSetOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiSetChatStickerSet, options, &success)
+	err := c.postJson(ctx, apiSetChatStickerSet, options, &success)
 	return success, err
 }
 
@@ -257,6 +257,6 @@ type SetChatStickerSetOptions struct {
 
 func (c *BotClient) DeleteChatStickerSet(ctx context.Context, options ChatOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiDeleteChatStickerSet, options, &success)
+	err := c.postJson(ctx, apiDeleteChatStickerSet, options, &success)
 	return success, err
 }

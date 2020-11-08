@@ -16,7 +16,7 @@ type CallbackQuery struct {
 
 func (c *BotClient) AnswerCallbackQuery(ctx context.Context, options AnswerCallbackQueryOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiAnswerCallbackQuery, options, &success)
+	err := c.postJson(ctx, apiAnswerCallbackQuery, options, &success)
 	return success, err
 }
 

@@ -65,7 +65,7 @@ type MessageEntity struct {
 
 func (c *BotClient) SendMessage(ctx context.Context, options SendMessageOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiSendMessage, options, &message)
+	err := c.postJson(ctx, apiSendMessage, options, &message)
 	return &message, err
 }
 
@@ -83,7 +83,7 @@ type SendMessageOptions struct {
 
 func (c *BotClient) ForwardMessage(ctx context.Context, options ForwardMessageOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiForwardMessage, options, &message)
+	err := c.postJson(ctx, apiForwardMessage, options, &message)
 	return &message, err
 }
 
@@ -96,7 +96,7 @@ type ForwardMessageOptions struct {
 
 func (c *BotClient) CopyMessage(ctx context.Context, options CopyMessageOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiCopyMessage, options, &message)
+	err := c.postJson(ctx, apiCopyMessage, options, &message)
 	return &message, err
 }
 
@@ -115,7 +115,7 @@ type CopyMessageOptions struct {
 
 func (c *BotClient) EditMessageText(ctx context.Context, options EditMessageTextOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiEditMessageText, options, &message)
+	err := c.postJson(ctx, apiEditMessageText, options, &message)
 	return &message, err
 }
 
@@ -132,7 +132,7 @@ type EditMessageTextOptions struct {
 
 func (c *BotClient) EditMessageCaption(ctx context.Context, options EditMessageCaptionOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiEditMessageCaption, options, &message)
+	err := c.postJson(ctx, apiEditMessageCaption, options, &message)
 	return &message, err
 }
 
@@ -148,7 +148,7 @@ type EditMessageCaptionOptions struct {
 
 func (c *BotClient) EditMessageReplyMarkup(ctx context.Context, options EditMessageReplyMarkupOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiEditMessageReplyMarkup, options, &message)
+	err := c.postJson(ctx, apiEditMessageReplyMarkup, options, &message)
 	return &message, err
 }
 
@@ -161,7 +161,7 @@ type EditMessageReplyMarkupOptions struct {
 
 func (c *BotClient) DeleteMessage(ctx context.Context, options DeleteMessageOptions) (bool, error) {
 	var success bool
-	err := c.postMethod(ctx, apiDeleteMessage, options, &success)
+	err := c.postJson(ctx, apiDeleteMessage, options, &success)
 	return success, err
 }
 
@@ -172,7 +172,7 @@ type DeleteMessageOptions struct {
 
 func (c *BotClient) SendContact(ctx context.Context, options SendContactOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiSendContact, options, &message)
+	err := c.postJson(ctx, apiSendContact, options, &message)
 	return &message, err
 }
 
@@ -216,7 +216,7 @@ type PollAnswer struct {
 
 func (c *BotClient) SendPoll(ctx context.Context, options SendPollOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiSendPoll, options, &message)
+	err := c.postJson(ctx, apiSendPoll, options, &message)
 	return &message, err
 }
 
@@ -242,7 +242,7 @@ type SendPollOptions struct {
 
 func (c *BotClient) StopPoll(ctx context.Context, options StopPollOptions) (*Poll, error) {
 	var poll Poll
-	err := c.postMethod(ctx, apiStopPoll, options, &poll)
+	err := c.postJson(ctx, apiStopPoll, options, &poll)
 	return &poll, err
 }
 
@@ -259,7 +259,7 @@ type Dice struct {
 
 func (c *BotClient) SendDice(ctx context.Context, options SendDiceOptions) (*Message, error) {
 	var message Message
-	err := c.postMethod(ctx, apiSendDice, options, &message)
+	err := c.postJson(ctx, apiSendDice, options, &message)
 	return &message, err
 }
 
