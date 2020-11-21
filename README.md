@@ -21,7 +21,7 @@ import (
 func main() {
 	
 	// Create a telegram bot client with default options
-	bot := telegram.New("YOUR_SECRET_BOT_TOKEN")
+	bot := telegram.NewBotClient("YOUR_SECRET_BOT_TOKEN")
 	
 	updatesCh := make(chan telegram.Update, 100)
 	killCh := make(chan struct{})
@@ -52,7 +52,7 @@ func main() {
 			select {
 			case <- killCh:
 				return
-			default:
+			case <- time.After(time.Second):
 			}
 		}
 	}()

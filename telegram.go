@@ -14,6 +14,8 @@ import (
 )
 
 const (
+	BaseURL = "https://api.telegram.org/bot"
+
 	// Getting Updates
 	apiGetUpdates     = "/getUpdates"
 	apiSetWebhook     = "/setWebhook"
@@ -80,13 +82,18 @@ const (
 type BotClient struct {
 	token      string
 	httpClient HttpClient
+	BaseURL    string
 }
 
 type HttpClient interface {
 	Do(*http.Request) (*http.Response, error)
 }
 
-func NewBotClient(botToken string, httpClient HttpClient) *BotClient {
+func NewBotClient(botToken string, httpClient HttpClient, baseURL string) (*BotClient, error) {
+	if botToken == "" {
+		return nil, fmt.Errorf("botToken cannot be empty")
+	}
+
 	t := &BotClient{
 		token:      botToken,
 		httpClient: &http.Client{},
@@ -96,7 +103,11 @@ func NewBotClient(botToken string, httpClient HttpClient) *BotClient {
 		t.httpClient = httpClient
 	}
 
-	return t
+	if baseURL == "" {
+		t.BaseURL = BaseURL + t.token
+	}
+
+	return t, nil
 }
 
 func (c *BotClient) GetMe(ctx context.Context) (*Bot, error) {
@@ -106,11 +117,11 @@ func (c *BotClient) GetMe(ctx context.Context) (*Bot, error) {
 }
 
 func (c *BotClient) LogOut(ctx context.Context) error {
-	return c.getMethod(ctx, apiLogOut, nil)
+	return c.postJson(ctx, apiLogOut, nil, nil)
 }
 
 func (c *BotClient) Close(ctx context.Context) error {
-	return c.getMethod(ctx, apiClose, nil)
+	return c.postJson(ctx, apiClose, nil, nil)
 }
 
 type BotCommand struct {
@@ -133,17 +144,17 @@ func (c *BotClient) GetMyCommands(ctx context.Context) ([]BotCommand, error) {
 }
 
 func (c *BotClient) getMethod(ctx context.Context, api string, out interface{}) error {
-	url := "https://api.telegram.org/bot" + c.token + api
+	url := c.BaseURL + api
 	return getJson(ctx, c.httpClient, url, out)
 }
 
 func (c *BotClient) postJson(ctx context.Context, api string, body, out interface{}) error {
-	url := "https://api.telegram.org/bot" + c.token + api
+	url := c.BaseURL + api
 	return postJson(ctx, c.httpClient, url, body, out)
 }
 
 func (c *BotClient) postMultipart(ctx context.Context, api string, in, out interface{}, multipartFiles ...*multiPartFile) error {
-	url := "https://api.telegram.org/bot" + c.token + api
+	url := c.BaseURL + api
 	return postMultipart(ctx, c.httpClient, url, in, out, multipartFiles...)
 }
 
