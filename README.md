@@ -1,11 +1,10 @@
 Telegram API in Go
 ===============
-This library supports APIS from the `api.telegram.org` REST calls. At the moment, this library only supports text based APIs.
-Support for webhook and multimedia (including telegram stickers) will be added in subsequent updates.
+This library supports APIs from the `core.telegram.org/bots` REST calls.
 
 ## Installing
 ### *go get*
-    $ go get -u github.com/chenlu-chua/go-telegram
+    $ go get -u github.com/ccl17/go-telegram
 
 ## Example
 ### Getting updates
